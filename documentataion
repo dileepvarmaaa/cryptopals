@@ -1,0 +1,44 @@
+Documentation for ECB byte at a time SIMPLE and HARD challenge :
+
+# Simple Challenge #
+
+ First we will define padding. Next we will define encryption and in that encryption only we will decode given junk into 'base64' now plaintext becomes as ( pt = pt + x(junk) ) now after this pt will get padded now I asserted a statement that when ( len(pt) % 16 == 0 ) now when this happens AES_ECB mode encryption takes place along with encrypted pt.
+
+ MAIN ATTACK :
+
+For doing this we must know our target
+first we have to take all (15*a)  and 16th one will be something and after decoding we will give us some value and after bruteforcing with all 256 possible values we will get equal value in one case so that it will be the secret value ,  similarly we will find the second word by taking only (14*a) because "THE WORD FIRST BRUTE-FORCED will be added " and becomes 15 and we want only last word and we bruteforce for that , like this we will find full JUNK. 
+
+
+# Hard Challenge #
+
+In this challenge it is clearly  given that :
+
+AES - 128 - ECB ( random prefix || attacker controlled || target-bytes , random-key )
+	
+When compared to easy challenge random prefix is added for this challenge , but the goal is same to decrypt the TARGET - BYTES.
+
+Similarly we do same process as above challenge i.e padding and encryption (but encryption here will be prepended with RANDOM-PREFIX as clearly mentioned in challenge and that will be our ct after everything thing done (i.e padding and encryption along with random - prefix)
+
+
+MAIN ATTACK :
+
+Firstly , we don't want what is random prefix we only deal with what is its length 
+so , first we will find its length. 
+
+Based on this example 
+
+If length of prefix is 6 then remaining 10 will be junk ( As pt is in attacker control , I will assume it's length as 0 to overcome confusion at first ) 
+
+now on my assumption this becomes my target :
+
+			len(prefix) + (len - 1)(junk) + 1 (Bruteforce)
+	 
+	i.e..       6       + ( 10 - 1 )      + 1    =     16
+
+now when I add next block then I will consider pt .
+ i.e..
+ 	In 32 I will divide as 
+ 	6 + 15 + 10 + 1 ( brute force ) then 11 is JUNK 
+
+Now we will do similarly till we will get full JUNK by brute-forcing
